@@ -1,11 +1,12 @@
 {
   "name": "usb-detection",
-  "version": "4.10.0",
+  "version": "4.11.0",
   "description": "Listen to USB devices and detect changes on them.",
   "main": "index.js",
   "types": "index.d.ts",
   "gypfile": true,
   "scripts": {
+    "node-gyp": "node-gyp",
     "install": "prebuild-install --runtime napi || node-gyp rebuild",
     "prepublishOnly": "npm run validate",
     "lint": "eslint **/*.js",
