@@ -15,28 +15,6 @@
 npm install usb-detection
 ```
 
-## Install for Electron
-
-This module uses native extensions and needs to be compiled for your target version of Electron. Precompiled binaries for recent Node.js and Electron versions are built and published using [prebuild][] and can be installed automatically using [electron-rebuild][].
-
-See the [Electron docs for using native modules][electron-native-modules] to ensure your project is set up to correctly use the prebuilt binaries for your version of Electron.
-
-[prebuild]: https://github.com/prebuild/prebuild
-[electron-rebuild]: https://github.com/electron/electron-rebuild
-[electron-native-modules]: https://www.electronjs.org/docs/tutorial/using-native-node-modules
-
----
-
-If you run into the following error, here are the exact steps you can use:
-
-```
-detection.node was compiled against a different Node.js version using NODE_MODULE_VERSION 72. This version of Node.js requires NODE_MODULE_VERSION 80. Please try re-compiling or re-installing 
-```
-
- 1. `npm i electron-rebuild --save-dev`
- 1. `./node_modules/.bin/electron-rebuild`
-
-
 # Usage
 
 ```js
