@@ -287,6 +287,7 @@ public:
 				goto cleanup;
 			}
 			
+			// Store a reference to this for the callback to use. Its a raw pointer, so will not extend the lifetime
             SetWindowLongPtrA( hwnd, GWLP_USERDATA, (LONG_PTR )this );
 
 			hDevNotify = RegisterDeviceNotificationA(hwnd, &notifyFilter, DEVICE_NOTIFY_WINDOW_HANDLE);
@@ -557,12 +558,17 @@ void InitializeDetection(Napi::Env &env, Napi::Object &target)
 	WindowsDetection::Initialize(env, target);
 }
 
+/**
+ * Callback when windows has a change to report
+ * This is a C function, with access to the class handle via GWLP_USERDATA
+ */
 LRESULT CALLBACK DetectCallback(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
 	WindowsDetection * parent = (WindowsDetection *)GetWindowLongPtrA( hwnd, GWLP_USERDATA );
 	if (parent != nullptr) {
 		if (msg == WM_DEVICECHANGE)
 		{
+			// Notifier reporting on a device
 			if (DBT_DEVICEARRIVAL == wParam || DBT_DEVICEREMOVECOMPLETE == wParam)
 			{
 				PDEV_BROADCAST_HDR pHdr = (PDEV_BROADCAST_HDR)lParam;
@@ -575,6 +581,8 @@ LRESULT CALLBACK DetectCallback(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lPara
 				}
 			}
 		} else if (msg == WM_CLOSE) {
+			// Notifier was closed by the os
+
 			if (!UnregisterDeviceNotification(parent->hDevNotify))
 			{
 				DWORD le = GetLastError();
