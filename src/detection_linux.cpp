@@ -203,7 +203,7 @@ private:
 		{
 			item->vendorId = strtol(vendor, NULL, 16);
 		}
-		const char *product = udev_device_get_sysattr_value(dev, "idVendor");
+		const char *product = udev_device_get_sysattr_value(dev, "idProduct");
 		if (product)
 		{
 			item->productId = strtol(product, NULL, 16);
