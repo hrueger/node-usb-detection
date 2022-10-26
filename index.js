@@ -2,6 +2,8 @@
 // SegfaultHandler.registerHandler();
 
 var index = require('./package.json');
+const path = require('path');
+const fs = require('fs');
 
 function isFunction(functionToCheck) {
 	return typeof functionToCheck === 'function';
@@ -10,7 +12,14 @@ function isFunction(functionToCheck) {
 if(global[index.name] && global[index.name].version === index.version) {
 	module.exports = global[index.name];
 } else {
-	var binding = require('bindings')('detection.node');
+	const prebuildFilename = `detection-${process.platform}-${process.arch}.node`;
+	const prebuildPath = path.join(__dirname, 'prebuilds', prebuildFilename);
+	let binding;
+	if(fs.existsSync(prebuildPath)) {
+		binding = require(prebuildPath);
+	} else {
+		binding = require('bindings')('detection.node');
+	}
 	var EventEmitter2 = require('eventemitter2').EventEmitter2;
 
 	var detection = new binding.Detection();

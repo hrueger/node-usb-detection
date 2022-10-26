@@ -6,8 +6,5 @@ npm-debug.log
 node_modules/
 build/
 
-# Ignore `prebuild` output
-prebuilds/
-
 # From `segfault-handler`
 stacktrace-*.log
