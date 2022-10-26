@@ -22,7 +22,7 @@ if(global[index.name] && global[index.name].version === index.version) {
 	}
 	var EventEmitter2 = require('eventemitter2').EventEmitter2;
 
-	var detection = new binding.Detection();
+	var detection = binding.Detection ? new binding.Detection() : binding;
 
 	var detector = new EventEmitter2({
 		wildcard: true,
